@@ -1,9 +1,8 @@
 import 'search_bar.dart';
 import 'package:flutter/material.dart';
 import 'switch_search_bar.dart';
-import 'package:use_state_builder/use_state_builder.dart';
 
-class SearchScaffold extends StatelessWidget {
+class SearchScaffold extends StatefulWidget {
   final SearchBar searchBar;
   final AppBar appBar;
   final TextField textField;
@@ -18,25 +17,43 @@ class SearchScaffold extends StatelessWidget {
     this.scaffold
   });
 
-  Widget build(BuildContext context) {
-    return UseStateBuilder(builder: (context, useState) {
-      final search = useState(openDefault);
-      final controller = useState(TextEditingController());
+  @override
+  State<StatefulWidget> createState() => SearchScaffoldState();
+}
 
-      return Scaffold(
-        appBar: SwitchSearchBar(
-            appBar: appBar,
-            search: search,
-            searchBar: searchBar,
-            textField: TextField(
-              controller: textField?.controller ?? controller.value,
+class SearchScaffoldState extends State<SearchScaffold> {
+   SearchBar get searchBar => widget.searchBar;
+   AppBar get appBar => widget.appBar;
+   TextField get textField => widget.textField;
+   Scaffold get scaffold => widget.scaffold;
+   bool get openDefault => widget.openDefault;
+
+   void initState() {
+     super.initState();
+     _search = ValueNotifier(openDefault);
+     _controller = TextEditingController();
+     _search.addListener(() {
+       setState(() {});
+     });
+   }
+
+   ValueNotifier<bool> _search;
+   TextEditingController _controller;
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: SwitchSearchBar(
+          appBar: appBar,
+          search: _search,
+          searchBar: searchBar,
+          textField: TextField(
+              controller: textField?.controller ?? _controller,
               onChanged: textField?.onChanged,
               onSubmitted: textField?.onSubmitted
-            )
-        ),
-        body: scaffold?.body,
-        floatingActionButton: scaffold?.floatingActionButton,
-      );
-    });
+          )
+      ),
+      body: scaffold?.body,
+      floatingActionButton: scaffold?.floatingActionButton,
+    );
   }
 }

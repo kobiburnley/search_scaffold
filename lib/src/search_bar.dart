@@ -43,6 +43,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
         onSubmitted: textField?.onSubmitted,
         onChanged: textField?.onChanged,
       ),
+      bottom: appBar.bottom,
     );
   }
 

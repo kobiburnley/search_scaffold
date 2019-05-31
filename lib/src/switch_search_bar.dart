@@ -26,6 +26,7 @@ class SwitchSearchBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: appBar.centerTitle,
         leading: appBar.leading,
         title: appBar.title,
+        bottom: appBar.bottom,
         actions: [
           IconButton(
             icon: Icon(Icons.search),

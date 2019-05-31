@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  use_state_builder:
-    git: https://github.com/kobiburnley/use_state_builder
 
 dev_dependencies:
   flutter_test:
