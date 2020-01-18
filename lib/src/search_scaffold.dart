@@ -53,6 +53,7 @@ class SearchScaffoldState extends State<SearchScaffold> {
           )
       ),
       body: scaffold?.body,
+      drawer: scaffold?.drawer,
       floatingActionButton: scaffold?.floatingActionButton,
     );
   }
