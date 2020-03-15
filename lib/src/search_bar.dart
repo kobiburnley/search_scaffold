@@ -19,7 +19,7 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
       leading: appBar.leading ??
           IconButton(
               icon: const BackButtonIcon(),
-              color: theme.textTheme.title.color,
+              color: theme.textTheme.headline6.color,
               onPressed: onBack),
       backgroundColor: appBar.backgroundColor ?? theme.scaffoldBackgroundColor,
       title: TextField(
