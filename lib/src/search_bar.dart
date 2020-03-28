@@ -6,21 +6,25 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onBack;
   final TextField textField;
 
-  SearchBar({String placeholder = "",
+  SearchBar({
+    String placeholder = "",
     this.onBack,
     AppBar appBar,
-    this.textField})
+    this.textField,
+  })
       : this.appBar = appBar ?? AppBar(),
         this.placeholder = placeholder;
 
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return AppBar(
-      leading: appBar.leading ??
-          IconButton(
+      leading: appBar.leading ?? onBack != null
+          ? IconButton(
               icon: const BackButtonIcon(),
               color: theme.textTheme.headline6.color,
-              onPressed: onBack),
+        onPressed: onBack,
+      )
+          : null,
       backgroundColor: appBar.backgroundColor ?? theme.scaffoldBackgroundColor,
       title: TextField(
         controller: textField?.controller,
@@ -28,13 +32,14 @@ class SearchBar extends StatelessWidget implements PreferredSizeWidget {
         textInputAction: textField?.textInputAction ?? TextInputAction.search,
         decoration: InputDecoration(
           hintText: placeholder,
-          suffixIcon: textField?.decoration?.suffixIcon ?? GestureDetector(
-            child: Icon(Icons.clear),
-            onTap: () {
-              textField?.controller?.clear();
-              textField?.onChanged(textField?.controller?.value?.text);
-            },
-          ),
+          suffixIcon: textField?.decoration?.suffixIcon ??
+              GestureDetector(
+                child: Icon(Icons.clear),
+                onTap: () {
+                  textField?.controller?.clear();
+                  textField?.onChanged(textField?.controller?.value?.text);
+                },
+              ),
           contentPadding: EdgeInsets.only(top: 16.0, bottom: 16.0),
 //          filled: true,
           border: InputBorder.none,

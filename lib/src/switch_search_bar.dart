@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'search_bar.dart';
 
 class SwitchSearchBar extends StatelessWidget implements PreferredSizeWidget {
@@ -6,8 +7,15 @@ class SwitchSearchBar extends StatelessWidget implements PreferredSizeWidget {
   final SearchBar searchBar;
   final AppBar appBar;
   final TextField textField;
+  final bool alwaysOpen;
 
-  SwitchSearchBar({@required this.search, SearchBar searchBar, AppBar appBar, this.textField})
+  SwitchSearchBar({
+    @required this.search,
+    SearchBar searchBar,
+    AppBar appBar,
+    this.textField,
+    this.alwaysOpen = false,
+  })
       : this.searchBar = searchBar ?? SearchBar(),
         this.appBar = appBar ?? AppBar();
 
@@ -15,12 +23,14 @@ class SwitchSearchBar extends StatelessWidget implements PreferredSizeWidget {
     Widget appBarWidget;
     if (search.value) {
       appBarWidget = SearchBar(
-          appBar: searchBar.appBar,
-          placeholder: searchBar.placeholder,
-          textField: textField,
-          onBack: searchBar.onBack ?? () {
-            search.value = false;
-          });
+        appBar: searchBar.appBar,
+        placeholder: searchBar.placeholder,
+        textField: textField,
+        onBack: searchBar.onBack ??
+            alwaysOpen ? null : () {
+          search.value = false;
+        },
+      );
     } else {
       appBarWidget = AppBar(
         centerTitle: appBar.centerTitle,
@@ -38,8 +48,8 @@ class SwitchSearchBar extends StatelessWidget implements PreferredSizeWidget {
       );
     }
 
-    appBarWidget =
-        AnimatedSwitcher(child: appBarWidget, duration: Duration(milliseconds: 300));
+    appBarWidget = AnimatedSwitcher(
+        child: appBarWidget, duration: Duration(milliseconds: 300));
 
     return appBarWidget;
   }

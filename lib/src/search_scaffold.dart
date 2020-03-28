@@ -1,5 +1,6 @@
-import 'search_bar.dart';
 import 'package:flutter/material.dart';
+
+import 'search_bar.dart';
 import 'switch_search_bar.dart';
 
 class SearchScaffold extends StatefulWidget {
@@ -8,14 +9,16 @@ class SearchScaffold extends StatefulWidget {
   final TextField textField;
   final Scaffold scaffold;
   final bool openDefault;
+  final bool alwaysOpen;
 
   SearchScaffold({
-    this.openDefault = false,
+    this.alwaysOpen = false,
+    bool openDefault,
     this.searchBar,
     this.appBar,
     this.textField,
     this.scaffold
-  });
+  }) : openDefault = openDefault ?? alwaysOpen;
 
   @override
   State<StatefulWidget> createState() => SearchScaffoldState();
@@ -46,10 +49,11 @@ class SearchScaffoldState extends State<SearchScaffold> {
           appBar: appBar,
           search: _search,
           searchBar: searchBar,
+          alwaysOpen: widget.alwaysOpen,
           textField: TextField(
               controller: textField?.controller ?? _controller,
               onChanged: textField?.onChanged,
-              onSubmitted: textField?.onSubmitted
+            onSubmitted: textField?.onSubmitted,
           )
       ),
       body: scaffold?.body,
