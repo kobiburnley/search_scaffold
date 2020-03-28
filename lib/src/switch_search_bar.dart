@@ -26,10 +26,11 @@ class SwitchSearchBar extends StatelessWidget implements PreferredSizeWidget {
         appBar: searchBar.appBar,
         placeholder: searchBar.placeholder,
         textField: textField,
-        onBack: searchBar.onBack ??
+        onBack: searchBar.onBack ?? (
             alwaysOpen ? null : () {
-          search.value = false;
-        },
+              search.value = false;
+            }
+        ),
       );
     } else {
       appBarWidget = AppBar(
